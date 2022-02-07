@@ -18,6 +18,7 @@
     "react-scripts": "5.0.0",
     "redux": "^4.1.2",
     "web-vitals": "^2.1.4",
+    "ethers": "^5.0.0",
     "web3": "^1.7.0"
   },
   "scripts": {
@@ -49,7 +50,6 @@
     "@nomiclabs/hardhat-waffle": "^2.0.0",
     "chai": "^4.2.0",
     "ethereum-waffle": "^3.0.0",
-    "ethers": "^5.0.0",
     "hardhat": "^2.8.3"
   }
 }
