@@ -14,7 +14,9 @@ export default function FundPage() {
 
   return (
     <>
-      <button onClick={gotoHome}>Go To Home</button>
+      <div className="goto" onClick={gotoHome}>
+        Go To Home
+      </div>
       <AccountInformation></AccountInformation>
       <Charge></Charge>
     </>

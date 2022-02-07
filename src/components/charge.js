@@ -8,10 +8,11 @@ import {
 } from "../store/reducers";
 import { checkCredit } from "../store/actions";
 import LoadingIndicator from "../utils/loading";
+import Notifications, { notify } from "react-notify-toast";
 
 export default function Charge() {
   const [isOwner, setIsOwner] = useState(false);
-  const [paid, setPaid] = useState(0);
+  const [paid, setPaid] = useState("");
   const [isPaid, setIsPaid] = useState(false);
   const [totalBalance, setTotalBalance] = useState(0);
   const [isWithdrawed, setIsWithdrawed] = useState(false);
@@ -80,6 +81,10 @@ export default function Charge() {
   const deposityMoneyHandler = async (event) => {
     try {
       event.preventDefault();
+      if (paid === "" || paid < 0.001) {
+        notify.show("You have to charge at least 0.001 ether", "error", 2000);
+        return;
+      }
       if (window.ethereum) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
@@ -94,6 +99,7 @@ export default function Charge() {
         });
         console.log("Deposting money...");
         await txn.wait();
+        notify.show("Deposit success", "success", 2000);
         setIsPaid(true);
         setLoading(false);
         console.log("Deposited money...done", txn.hash);
@@ -108,6 +114,13 @@ export default function Charge() {
 
   const withdrawHandler = async () => {
     try {
+      if (totalBalance < 0.01) {
+        notify.show(
+          "You can withdraw only when balance is over 0.01",
+          "error",
+          2000
+        );
+      }
       if (window.ethereum) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
@@ -125,7 +138,7 @@ export default function Charge() {
         await txn.wait();
         setLoading(false);
         console.log("Money with drew...done", txn.hash);
-
+        notify.show("Withdraw success", "success", 2000);
         setIsWithdrawed(true);
       } else {
         console.log("Ethereum object not found, install Metamask.");
@@ -148,29 +161,35 @@ export default function Charge() {
   }, [isPaid, isOwner]);
 
   return (
-    <div>
+    <div className="d-flex flex-column align-items-center mt-5">
+      <Notifications />
       {loading && <LoadingIndicator />}
-      <div>
-        <input
-          type="text"
-          className="input-style"
-          onChange={handleInputPaidChange}
-          name="deposit"
-          placeholder="0.0000 ETH"
-          value={paid}
-        />
-        <button className="btn-deposit" onClick={deposityMoneyHandler}>
-          Deposit
-        </button>
-      </div>
-      {isOwner && (
-        <div>
-          <div>{totalBalance}</div>
-          <button className="btn-withdraw" onClick={withdrawHandler}>
-            Withdraw
+      <div className="fund col-4">
+        <div className="d-flex flex-row justify-content-between">
+          <input
+            type="text"
+            className="input-style col-7"
+            onChange={handleInputPaidChange}
+            name="deposit"
+            placeholder="0.0000 ETH"
+            value={paid}
+          />
+          <button className="btn-deposit mx-3" onClick={deposityMoneyHandler}>
+            Deposit
           </button>
         </div>
-      )}
+        {isOwner && (
+          <div className="d-flex flex-row justify-content-between mt-5">
+            <div className="balance col-7">
+              <span className="font-bold">Total balance:</span>
+              <span className="ms-3">{totalBalance} ether</span>
+            </div>
+            <button className="btn-withdraw col-5" onClick={withdrawHandler}>
+              Withdraw
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

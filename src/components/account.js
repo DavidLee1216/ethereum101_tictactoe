@@ -51,16 +51,20 @@ export default function AccountInformation() {
   }, [isWalletConnected]);
 
   return (
-    <div className="account-panel container-xl mt-5 mb-3">
+    <div className="account-panel container-xl my-3">
       {loading && <LoadingIndicator />}
-      <div className="d-flex flex-row justify-content-center">
+      <div className="text-center fs-4">This is a two player game</div>
+      <div className="text-center fs-6">
+        (First player making five item sequence wins)
+      </div>
+      <div className="mt-5 d-flex flex-row justify-content-center">
         <div className="me-3 font-bold">account address:</div>
         {isWalletConnected && <div>{customerAddress}</div>}
         <button className="btn-connect" onClick={checkIfWalletIsConnected}>
           {isWalletConnected ? "Wallet Connected 🔒" : "Connect Wallet 🔑"}
         </button>
       </div>
-      <div className="d-flex flex-row justify-content-center">
+      <div className="mt-3 d-flex flex-row justify-content-center">
         <div className="me-3 font-bold">game credit:</div>
         <div>{customerTotalCredit}💰</div>
       </div>

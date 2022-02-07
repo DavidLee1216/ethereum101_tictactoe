@@ -206,7 +206,7 @@ export default function Game() {
       <div className="status mb-2">{gameState.status_text}</div>
       <div className="grid">{items}</div>
       <div className="button-wrap">
-        <button className="reset" type="button" onClick={reset}>
+        <button className="button-reset" type="button" onClick={reset}>
           Reset
         </button>
       </div>

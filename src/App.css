@@ -30,17 +30,58 @@
   justify-content: center;
   text-align: center;
   vertical-align: middle;
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   border: 1px solid #ccc;
   border-width: 1px 1px 1px 1px;
   cursor: pointer;
+}
+.goto {
+  color: blue;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: large;
 }
 .button-wrap {
   display: flex;
   justify-content: center;
 }
-button {
+.btn-connect {
+  background-image: linear-gradient(rgb(242, 234, 100), rgb(233, 200, 72));
+  padding: 0.1rem 1rem;
+  margin-left: 1rem;
+  font-weight: bold;
+  /* @apply bg-indigo-500 px-5 py-3 mt-5 rounded-lg text-slate-100 font-bold; */
+}
+.input-style {
+  padding: 0.5rem 1rem;
+  margin: 0rem 3rem;
+  height: 40px;
+  color: black;
+}
+.fund {
+  border: 0.3rem solid orange;
+  border-radius: 20px;
+  padding: 1rem;
+}
+.balance {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: larger;
+}
+.btn-deposit,
+.btn-withdraw {
+  font-weight: bold;
+  padding: 0rem 1rem;
+  margin: 0rem 1rem;
+  color: indigo;
+  background-image: linear-gradient(rgb(254, 254, 254), rgb(221, 221, 221));
+  height: 40px;
+  width: 150px;
+}
+.button-reset {
   margin-top: 30px;
   width: 100px;
   height: 50px;

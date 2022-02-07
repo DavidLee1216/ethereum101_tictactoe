@@ -10,7 +10,9 @@ export default function HomePage() {
   };
   return (
     <>
-      <button onClick={gotoCharge}>Go To Charge</button>
+      <div className="goto" onClick={gotoCharge}>
+        Go To Charge
+      </div>
       <AccountInformation></AccountInformation>
       <Game></Game>
     </>
