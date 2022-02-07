@@ -1,5 +1,5 @@
 {
-  "name": "ether101-exchange",
+  "name": "ether101-tic-tac-toe",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
