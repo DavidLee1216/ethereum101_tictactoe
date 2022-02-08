@@ -11,7 +11,7 @@ export default function HomePage() {
   return (
     <>
       <div className="goto" onClick={gotoCharge}>
-        Go To Charge
+        Go To Charge Credits
       </div>
       <AccountInformation></AccountInformation>
       <Game></Game>

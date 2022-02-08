@@ -165,13 +165,14 @@ export default function Charge() {
       <Notifications />
       {loading && <LoadingIndicator />}
       <div className="fund col-4">
+        <div className="text-center mb-3">0.001 Ether for one credit</div>
         <div className="d-flex flex-row justify-content-between">
           <input
             type="text"
             className="input-style col-7"
             onChange={handleInputPaidChange}
             name="deposit"
-            placeholder="0.0000 ETH"
+            placeholder="0.001 ETH"
             value={paid}
           />
           <button className="btn-deposit mx-3" onClick={deposityMoneyHandler}>
