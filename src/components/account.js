@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useReduce } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useReduce,
+} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ethers, utils } from "ethers";
 import {
@@ -19,7 +25,7 @@ export default function AccountInformation() {
   const customerTotalCredit = useSelector((state) => state.credit);
   const dispatch = useDispatch();
 
-  const checkIfWalletIsConnected = async () => {
+  const checkIfWalletIsConnected = useCallback(async () => {
     try {
       if (window.ethereum) {
         const accounts = await window.ethereum.request({
@@ -36,7 +42,7 @@ export default function AccountInformation() {
     } catch (error) {
       console.log(error);
     }
-  };
+  }, []);
 
   useEffect(() => {
     async function fetch_data() {

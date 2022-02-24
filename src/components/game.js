@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Square from "./square";
 import Notifications, { notify } from "react-notify-toast";
@@ -24,7 +24,7 @@ export default function Game() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const checkWinner = (row, col, val) => {
+  const checkWinner = useCallback((row, col, val) => {
     let maxlen = 0;
     let i = row,
       j = col;
@@ -80,8 +80,8 @@ export default function Game() {
       for (j = 0; j < matrix_elem_count; j++) if (matrix[i][j] !== "") tie++;
     if (tie === matrix_elem_count * matrix_elem_count) return undefined;
     return false;
-  };
-  const consumeCreditHandler = async () => {
+  }, []);
+  const consumeCreditHandler = useCallback(async () => {
     try {
       if (window.ethereum) {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -106,8 +106,8 @@ export default function Game() {
       notify.show("You need to consume credit to play the game", "error", 2000);
     }
     return false;
-  };
-  const squareClick = async (row, col, status) => {
+  }, []);
+  const squareClick = useCallback(async (row, col, status) => {
     try {
       if (gameState.status === "T" || gameState.status === "W") {
         notify.show(
@@ -155,8 +155,8 @@ export default function Game() {
         });
       }
     } catch {}
-  };
-  const reset = () => {
+  }, []);
+  const reset = useCallback(() => {
     for (let i = 0; i < matrix_elem_count; i++) {
       for (let j = 0; j < matrix_elem_count; j++) matrix[i][j] = "";
     }
@@ -167,7 +167,7 @@ export default function Game() {
       status_text: "Next player: X",
     });
     // this.setState({ status_text: "Next player: X" });
-  };
+  }, []);
 
   useEffect(() => {
     matrix = [];
@@ -184,20 +184,24 @@ export default function Game() {
 
   useEffect(() => {});
 
-  items = matrix.map((elem, index) => (
-    <div className="tilerow" key={index}>
-      {elem.map((e, i) => (
-        <Square
-          val={e}
-          status={gameState.status}
-          row={index}
-          col={i}
-          squareClick={squareClick}
-          key={i}
-        ></Square>
-      ))}
-    </div>
-  ));
+  items = useMemo(
+    (matrix) =>
+      matrix.map((elem, index) => (
+        <div className="tilerow" key={index}>
+          {elem.map((e, i) => (
+            <Square
+              val={e}
+              status={gameState.status}
+              row={index}
+              col={i}
+              squareClick={squareClick}
+              key={i}
+            ></Square>
+          ))}
+        </div>
+      )),
+    [matrix]
+  );
 
   return (
     <div>
